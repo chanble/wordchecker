@@ -63,6 +63,7 @@ class DFA
                 $arrHashMap = $this->arrHashMap;
                 $keywordLen = 0;
                 // 如果一个关键词没有匹配到，应该回归到最初匹配到的字的位置
+                // 如： 匹配关键词“制毒贩罪”和“毒贩”时， 如果不能匹配“制毒贩罪”，应该回归到“毒”字进行匹配，而不能继续后面的字符串
                 if ($start >= 0) {
                     $i = $start;
                     $start = -1;
