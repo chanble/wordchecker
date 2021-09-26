@@ -1,0 +1,19 @@
+{
+    "name": "df-zl/wordchecker",
+    "description": "word checker filter",
+    "type": "library",
+    "license": "private",
+    "autoload": {
+        "psr-4": {
+            "DfZl\\Wordchecker\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "chanble",
+            "email": "chanble_cn@163.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
