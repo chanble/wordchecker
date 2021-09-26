@@ -11,7 +11,8 @@ $memory = memory_get_usage();
 echo "{$startTime} 占用内存： {$memory} 开始程序\r\n";
 
 if (1) {
-    for ($i = 0; $i < 1000000; $i++) {
+    $keywordsTimes = 10000;
+    for ($i = 0; $i < $keywordsTimes; $i++) {
         $dfa->add(getRandKeyword());
         if ($i % 100 == 0) {
             echo '.';
@@ -39,7 +40,11 @@ $startTime = $startTime1;
 $memory = memory_get_usage();
 echo "{$startTime} 占用内存： {$memory} 耗时： {$gotime}  初始化dfa树完成\r\n";
 
-for ($i = 0; $i < 1000; $i++) {
+$filterTotalTime = 0;
+
+$filterTimes = 1000;
+
+for ($i = 0; $i < $filterTimes; $i++) {
     $filterWords = getRandFilterWords();
 
     $startTime1 = formatTime(microtime(true));
@@ -55,8 +60,10 @@ for ($i = 0; $i < 1000; $i++) {
     $startTime = $startTime1;
     $memory = memory_get_usage();
     echo "{$startTime} 占用内存： {$memory} 耗时： {$gotime}  过滤字符串串完成  过滤后的结果： {$searchRes}\r\n";
-
+    $filterTotalTime += $gotime;
 }
+$avgTime = $filterTotalTime / $filterTimes;
+echo "关键词数量： {$keywordsTimes} 过滤平均时间： {$avgTime}";
 
 
 function formatTime($time) :float {
