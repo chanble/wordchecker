@@ -85,14 +85,19 @@ class DFATest extends TestCase {
         $dfa->add("我好呀");
 
         $searchRes = $dfa->filter("巨大几点睡啊金额");
-        $this->assertEquals($searchRes, "巨大几点睡啊金额");
+        $this->assertEquals("巨大几点睡啊金额", $searchRes);
         $searchRes = $dfa->filter("");
-        $this->assertEquals($searchRes, "");
+        $this->assertEquals("", $searchRes);
         $searchRes = $dfa->filter("你好我好大家好");
-        $this->assertEquals($searchRes, "**我好大家好");
+        $this->assertEquals("**我好大家好", $searchRes);
         $searchRes = $dfa->filter("您好我好呀大家好");
-        $this->assertEquals($searchRes, "您好***大家好");
+        $this->assertEquals("您好***大家好", $searchRes);
         $searchRes = $dfa->filter("您好大家好我好不呀");
-        $this->assertEquals($searchRes, "您好大家好我好不呀");
+        $this->assertEquals("您好大家好我好不呀", $searchRes);
+        $dfa->add("好");
+        $searchRes = $dfa->filter("我好不呀");
+        $this->assertEquals("我*不呀", $searchRes);
+        $searchRes = $dfa->filter("您好大家好我好不呀");
+        $this->assertEquals("您*大家*我*不呀", $searchRes);
     }
 }

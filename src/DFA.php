@@ -62,16 +62,21 @@ class DFA
                 // reset hashmap
                 $arrHashMap = $this->arrHashMap;
                 $keywordLen = 0;
+                // 如果一个关键词没有匹配到，应该回归到最初匹配到的字的位置
+                if ($start >= 0) {
+                    $i = $start;
+                    $start = -1;
+                }
                 continue;
             }
             $keywordLen += 1;
+
+            // 记录关键词匹配的最初位置
+            if ($start < 0) {
+                $start = $i;
+            }
             if (isset($arrHashMap[$word]['end']) && $arrHashMap[$word]['end']) {
                 return [$start, $keywordLen];
-            } else {
-                // 记录关键词匹配的最初位置
-                if ($start < 0) {
-                    $start = $i;
-                }
             }
             $arrHashMap = $arrHashMap[$word];
         }
