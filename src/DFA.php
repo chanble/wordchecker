@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace DfZl\Wordchecker;
 
-class DFA
+/**
+ * Deterministic Finite Automaton
+ */
+class DFA implements CheckerInterface
 {
-    const CONCEAL_CHAR = '*';
     private $arrHashMap = [];
 
     public function __get($name) {
@@ -13,11 +15,9 @@ class DFA
     }
 
     /**
-     * 添加关键词
-     * @param string $strWord 要添加的关键词
-     * @return DFA 返回this  支持链式添加
+     * @implements
      */
-    public function add($strWord) : Self {
+    public function add(string $strWord) : CheckerInterface {
         $len = utf8_strlen($strWord);
 
         // 传址
@@ -46,11 +46,9 @@ class DFA
     }
 
     /**
-     * 判断给定的字符串($strWord)中是否包含关键词
-     * @param string $strWord 要搜索的字符串
-     * @return array 长度为2的数组 0表示字符串的开始位置， 1表示关键词长度
+     * @implements
      */
-    public function search($strWord) : array {
+    public function search(string $strWord) : array {
         $len = utf8_strlen($strWord);
         $arrHashMap = $this->arrHashMap;
         // 匹配的开始位置
@@ -84,6 +82,9 @@ class DFA
         return [];
     }
 
+    /**
+     * @implements
+     */
     public function filter(string $strWord) : string {
         if (empty($strWord)) {
             return "";
@@ -105,7 +106,16 @@ class DFA
             $remainder = utf8_substr($strWord, $remainderStartPos);
         }
         return $startStr 
-            . str_repeat(Self::CONCEAL_CHAR, $searchRes[1])
+            . str_repeat(CONCEAL_CHAR, $searchRes[1])
             . $this->filter($remainder);
+    }
+
+    /**
+     * @implements
+     */
+    public function clear() : CheckerInterface
+    {
+        $this->arrHashMap = [];
+        return $this;
     }
 }

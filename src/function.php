@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DfZl\Wordchecker;
 
 const UTF8 = 'UTF-8';
+const CONCEAL_CHAR = '*';
 
 /**
  * 用utf8格式截取字符串

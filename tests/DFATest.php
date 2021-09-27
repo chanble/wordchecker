@@ -99,5 +99,17 @@ class DFATest extends TestCase {
         $this->assertEquals("我*不呀", $searchRes);
         $searchRes = $dfa->filter("您好大家好我好不呀");
         $this->assertEquals("您*大家*我*不呀", $searchRes);
+
+        $dfa->clear();
+        $dfa->add("你好呀");
+        $dfa->add("你不好");
+        $result = $dfa->filter("我不好，你不好");
+        $this->assertEquals("我不好，***", $result);
+
+        $dfa->clear();
+        $dfa->add("你不好呀");
+        $dfa->add("不好");
+        $result = $dfa->filter("你不好吗");
+        $this->assertEquals("你**吗", $result);
     }
 }
